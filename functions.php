@@ -201,12 +201,27 @@ add_filter('nav_menu_css_class' , 'ssw_special_nav_class' , 10 , 2);
 
 function ssw_special_nav_class ($classes) {
     if (in_array('current-menu-item', $classes) ){
-        $classes[] = 'active ';
+        $classes[] = 'active';
     }
     return $classes;
 }
 
-add_filter('nav_menu_css_class' , 'ssw_clients_class' , 10 , 2);
+function add_class_to_href($classes, $item)
+{
+
+    if (in_array('current_page_item', $item->classes)) {
+        $classes['class'] = 'active';
+        if (in_array('home-page', $item->classes)) {
+            $classes['class'] = 'active red';
+        }
+    }
+
+
+    return $classes;
+}
+add_filter('nav_menu_link_attributes', 'add_class_to_href', 10, 2);
+
+/*add_filter('nav_menu_css_class' , 'ssw_clients_class' , 10 , 2);
 
 function ssw_clients_class ($classes) {
     if (in_array('current-menu-item', $classes) ){
@@ -214,6 +229,31 @@ function ssw_clients_class ($classes) {
     }
     return $classes;
 }
+
+function ssw_slider_shortcode($atts)
+{
+  return "<div class=\"col-md-8 col-md-offset-2 object-non-visible animated object-visible fadeIn\" data-animation-effect=\"fadeIn\">
+          <h1 class=\"text-center\">We are <span>Worthy</span></h1>
+          <p class=\"lead text-center\">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos debitis provident nulla illum minus enim praesentium repellendus ullam
+            cupiditate reiciendis optio voluptatem, recusandae nobis quis aperiam, sapiente libero ut at.</p>
+        </div>";
+}
+add_shortcode('main_slider', 'ssw_slider_shortcode');
+function ssw_youtube($atts, $content = null)
+{
+  $values = shortcode_atts(array(
+    'width' => 560,
+    'height' => 315
+  ), $atts);
+  return '<iframe width="' . $values['width'] . '" height="' . $values['height'] . '" src="https://www.youtube.com/embed/' . $content . '?ecver=1" frameborder="0" allowfullscreen></iframe>';
+}
+add_shortcode('main_youtube', 'ssw_youtube');
+function ssw_load_images($atts, $content = null)
+{
+  return '<img src="' . $content . '" width="100" />';
+}
+add_shortcode('load_images', 'ssw_load_images');
+
 
 function ssw_tube_shortcode($atts) {
     $att = shortcode_atts(array(
@@ -243,6 +283,9 @@ function ssw_serve_shortcode($atts) {
 			'</div>';
 }
 add_shortcode( 'serve', 'ssw_serve_shortcode' );
+*/
+
+add_theme_support('post-thumbnails');
 
 function ssw_widgets_copyright() {
     register_sidebar( array(
