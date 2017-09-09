@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php get_header(); //get header ?>
     <div class="container">
         <div class="row">
             <!-- Carousel -->
